@@ -19,8 +19,9 @@ In the parent directory **originmarkets**
 In the parent directory **originmarkets**
 - python manage.py runserver
 
-### Try out api at
-- {host}/api/
+### Try out api
+- Create User
+- visit {host}/api/
 - bonds, legal_entities, and users are supported. 
 
 
