@@ -21,7 +21,7 @@ class BondSerializer(ModelSerializer):
 
     class Meta:
         model = Bond
-        fields = ['id', 'isin', 'size', 'currency', 'maturity', 'lei', 'legal_name', 'owner', 'created', 'legal_entity']
+        fields = ['isin', 'size', 'currency', 'maturity', 'lei', 'legal_name', 'owner', 'created', 'legal_entity']
         read_only_fields = ['legal_name']
 
     def create(self, validated_data):

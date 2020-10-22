@@ -1,6 +1,7 @@
 from django.http import Http404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
@@ -74,9 +75,14 @@ class LegalEntityDetail(APIView):
 
 # Move to api root app
 @api_view(['GET'])
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def api_root(request, format=None):
-    return Response({
+    root_urls = {
         'bonds': reverse('bond-list', request=request, format=format),
         'legal_entities': reverse('legal_entity-list', request=request, format=format),
         'users': reverse('user-list', request=request, format=format),
-    })
+    }
+    if not request.user.is_authenticated:
+        root_urls['registration'] = reverse('register-user', request=request, format=format)
+
+    return Response(root_urls)
